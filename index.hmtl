@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Katelynn 💜</title>
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    color:#ffb6e6;
+    text-align:center;
+    overflow-x:hidden;
+    background: radial-gradient(circle at bottom, #0d001a, #000);
+    animation: backgroundShift 20s ease-in-out infinite alternate;
+}
+
+/* Background glow animation */
+@keyframes backgroundShift {
+    0% { background: radial-gradient(circle at bottom, #0d001a, #000); }
+    50% { background: radial-gradient(circle at bottom, #12002c, #000); }
+    100% { background: radial-gradient(circle at bottom, #0d001a, #000); }
+}
+
+/* NAV */
+nav {
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#000c;
+    padding:10px;
+    z-index:1000;
+}
+nav button {
+    margin:5px;
+    padding:8px 12px;
+    background:#ff69b4;
+    border:none;
+    border-radius:10px;
+    color:white;
+}
+
+/* Sections */
+.section { display:none; padding-top:100px; }
+.active { display:block; }
+
+/* Moon */
+.moon {
+    position:absolute;
+    top:60px;
+    right:40px;
+    width:70px;
+    height:70px;
+    background:white;
+    border-radius:50%;
+    box-shadow:0 0 40px white;
+    animation: glow 4s ease-in-out infinite alternate;
+}
+@keyframes glow { 0% { box-shadow:0 0 20px white; } 100% { box-shadow:0 0 50px #ffb6e6; } }
+
+/* Stars */
+.star {
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle { from{opacity:0.2;} to{opacity:1;} }
+
+/* Hearts / Floating emojis */
+.heart, .emoji {
+    position:absolute;
+    font-size:24px;
+    animation: floatUp 6s linear infinite;
+}
+@keyframes floatUp {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(-10vh);}
+}
+
+/* Gallery */
+.gallery img { width:120px; margin:10px; border-radius:15px; }
+
+/* Memory jar */
+.jar { font-size:60px; transition:0.3s; }
+.shake { animation: shake 0.4s; }
+@keyframes shake {0%{transform:translateX(0);}25%{transform:translateX(-5px);}50%{transform:translateX(5px);}75%{transform:translateX(-5px);}100%{transform:translateX(0);}}
+
+/* Sparkle */
+.sparkle { position:absolute; color:#fff; pointer-events:none; animation: fade 1s forwards; }
+@keyframes fade { to {opacity:0; transform:translateY(-20px);} }
+
+/* Input */
+input { padding:10px; border-radius:10px; border:none; }
+button { cursor:pointer; }
+
+/* FINAL MESSAGE */
+#finalMessage {
+    position:fixed; bottom:-200px; left:50%; transform:translateX(-50%);
+    background:#ff69b4dd; padding:20px; border-radius:15px;
+    width:80%; color:white; font-size:18px;
+    opacity:0; transition:all 2s; z-index:9999;
+}
+#finalMessage span { display:block; margin-top:10px; font-weight:bold; font-size:24px; color:#fff; position:relative; }
+</style>
+</head>
+<body>
+
+<nav>
+<button onclick="show('home')">💜 Home</button>
+<button onclick="show('gallery')">📸 Photos</button>
+<button onclick="show('memory')">🫙 Memories</button>
+<button onclick="show('poem')">📜 Poem</button>
+<button onclick="show('message')">💌 Message</button>
+</nav>
+
+<div class="moon"></div>
+
+<!-- HOME -->
+<div id="home" class="section active">
+<h1 onclick="secret()">For Katelynn 💜</h1>
+<p id="secretText" style="display:none;">
+I love you deeply. You were my best friend, my joy, my smile. I hope you never forget that.
+</p>
+<div id="letter"></div>
+<button onclick="playSong()">🎵 Play Our Song</button>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery" class="section">
+<h2>📸 Our Moments</h2>
+<input type="file" accept="image/*" onchange="addPhoto(event)">
+<div class="gallery" id="photos"></div>
+<p>Tap above to add your own memories 💜</p>
+</div>
+
+<!-- MEMORY -->
+<div id="memory" class="section">
+<h2>🫙 Memory Jar</h2>
+<div class="jar" onclick="memory(this)">🫙</div>
+<p id="memoryText"></p>
+</div>
+
+<!-- POEM -->
+<div id="poem" class="section">
+<h2>📜 For You</h2>
+<p>
+You’re my first thought in the morning,<br>
+my last thought at night.<br><br>
+You made me laugh when I didn’t want to,<br>
+kept me alive when life got heavy.<br><br>
+I loved you deeply, truly, fully,<br>
+even when you didn’t see it the way I did.<br><br>
+You’re my best friend, my joy, my smile in the morning,<br>
+my favorite part of the day, my beautiful lady.<br><br>
+Even if we don’t end up perfect,<br>
+what I felt for you was real,<br>
+and that’ll never change.
+</p>
+</div>
+
+<!-- MESSAGE -->
+<div id="message" class="section">
+<h2>💌 Say Something</h2>
+<input id="msg" placeholder="Type here...">
+<button onclick="reply()">Send</button>
+<p id="response"></p>
+</div>
+
+<!-- FINAL MESSAGE -->
+<div id="finalMessage">
+Katelynn… I just want you to know that no matter what, you were always my everything.  
+You’re my best friend, my smile, my joy, my beautiful lady.  
+<span id="marryMe">marry me 💜</span>
+</div>
+
+<script>
+function show(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function secret(){let s=document.getElementById("secretText");s.style.display = s.style.display==="none"?"block":"none";}
+const text=["Katelynn…","My love for you is real.","You’re my best friend, my smile in the morning, my favorite part of the day.","My beautiful lady… I always chose you.","Even when things got messy or hard… I never stopped caring.","You weren’t just someone in my life, you were the part that made life feel right.","I hope you always know how deeply I loved you.","Nothing about that was fake. Not a single bit."];
+let i=0;function type(){if(i<text.length){let p=document.createElement("p");p.innerText=text[i];document.getElementById("letter").appendChild(p);i++;setTimeout(type,1400);}}type();
+function addPhoto(e){let img=document.createElement("img");img.src=URL.createObjectURL(e.target.files[0]);document.getElementById("photos").appendChild(img);}
+const memories=["Morning laughs that made the whole day better","Moments you didn’t even realize meant everything to me","Late nights that felt like they should’ve lasted longer","The way things felt when it was just us and nothing else"];
+function memory(el){el.classList.add("shake");setTimeout(()=>el.classList.remove("shake"),400);document.getElementById("memoryText").innerText=memories[Math.floor(Math.random()*memories.length)];}
+function reply(){const responses=["I hear you… I always did, even when I didn’t say it right.","My love for you was real every single day.","You’re my smile, my best friend, my favorite part of the day.","I never stopped caring about you, even when it was hard.","Remember… you were always my beautiful lady, no matter what."];document.getElementById("response").innerText=responses[Math.floor(Math.random()*responses.length)];}
+if(!localStorage.getItem("played")){window.open("https://www.youtube.com/watch?v=LJ7qXHjxj_0");localStorage.setItem("played",true);}
+for(let i=0;i<160;i++){let s=document.createElement("div");s.className="star";s.style.left=Math.random()*100+"vw";s.style.top=Math.random()*100+"vh";document.body.appendChild(s);}
+setInterval(()=>{let h=document.createElement("div");h.className="heart";h.innerHTML="💜";h.style.left=Math.random()*100+"vw";document.body.appendChild(h);setTimeout(()=>h.remove(),6000);},500);
+document.addEventListener("click",(e)=>{let s=document.createElement("div");s.className="sparkle";s.innerHTML="✨";s.style.left=e.pageX+"px";s.style.top=e.pageY+"px";document.body.appendChild(s);setTimeout(()=>s.remove(),1000);});
+
+/* FINAL MESSAGE MAGIC + FLOATING EMOJIS */
+setTimeout(()=>{
+let fm=document.getElementById("finalMessage"); fm.style.bottom="20px"; fm.style.opacity="1";
+
+// drifting hearts from final message
+setInterval(()=>{let h=document.createElement("div");h.className="heart";h.innerHTML="💜";let rect=fm.getBoundingClientRect();h.style.left=(rect.left + Math.random()*rect.width)+"px"; h.style.top=rect.top+"px";document.body.appendChild(h);setTimeout(()=>h.remove(),4000);},700);
+
+// sparkles around "marry me"
+setInterval(()=>{let s=document.createElement("div");s.className="sparkle";s.innerHTML="✨";let mm=document.getElementById("marryMe").getBoundingClientRect(); s.style.left=(mm.left + Math.random()*mm.width)+"px"; s.style.top=mm.top+"px";document.body.appendChild(s);setTimeout(()=>s.remove(),1200);},500);
+
+// floating emojis continuously
+const emojis=["💜","✨","🌙","🌸"];
+setInterval(()=>{
+let e=document.createElement("div");
+e.className="emoji";
+e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+e.style.left=Math.random()*100+"vw";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),6000);
+},800);
+
+},10000);
+</script>
+</body>
+</html>
